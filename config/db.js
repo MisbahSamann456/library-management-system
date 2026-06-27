@@ -1,14 +1,17 @@
 const mongoose = require('mongoose');
-const { MongoMemoryServer } = require('mongodb-memory-server');
-
-let mongod;
 
 const connectDB = async () => {
   try {
-    mongod = await MongoMemoryServer.create();
-    const uri = mongod.getUri();
-    await mongoose.connect(uri);
-    console.log('MongoDB connected (in-memory)');
+    if (process.env.MONGO_URI) {
+      await mongoose.connect(process.env.MONGO_URI);
+      console.log('MongoDB connected (Atlas)');
+    } else {
+      const { MongoMemoryServer } = require('mongodb-memory-server');
+      const mongod = await MongoMemoryServer.create();
+      const uri = mongod.getUri();
+      await mongoose.connect(uri);
+      console.log('MongoDB connected (in-memory)');
+    }
   } catch (error) {
     console.error('DB connection failed:', error.message);
     process.exit(1);
