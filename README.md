@@ -80,7 +80,7 @@ A backend REST API for managing books, members, and borrowing activities in a li
 
 ## Deployment URL
 
-Coming soon...
+https://library-management-system-production-7899.up.railway.app
 
 ## Roles
 
